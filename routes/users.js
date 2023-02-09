@@ -14,7 +14,7 @@ const User = require('../models/users');
 const { checkBody } = require('../modules/checkBody');
 
 router.post('/signup', (req, res) => { 
-	if (!checkBody(req.body, ['username', 'password'])) {
+	if (!checkBody(req.body, ['username', 'forname', 'password'])) {
     res.json({ result: false, error: 'Missing or empty fields' });
     return;
   }
@@ -25,6 +25,7 @@ router.post('/signup', (req, res) => {
       const hash = bcrypt.hashSync(req.body.password, 10)
       const newUser = new User({
         username: req.body.username,
+        forname: req.body.forname,
         password: hash,
         token: uid2(32),
         canBookmark: true,
